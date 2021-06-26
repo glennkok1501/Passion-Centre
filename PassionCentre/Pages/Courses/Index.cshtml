@@ -1,0 +1,73 @@
+﻿@page "{id:int?}"
+@model PassionCentre.Pages.Courses.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].Subject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].Date)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Course[0].Time)
+                </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course[0].Description)
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Course[0].MeetingDetails)
+                </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Course)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Time)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.MeetingDetails)
+                    </td>*@
+                <td>
+                    <a href="/Movies/Edit/1">Edit</a> |
+                    <a href="/Movies/Details/1">Details</a> |
+                    <a href="/Movies/Delete/1">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
