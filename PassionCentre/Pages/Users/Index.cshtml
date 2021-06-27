@@ -1,0 +1,42 @@
+﻿@page
+@model PassionCentre.Pages.Users.IndexModel
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<h1>Manage Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                S/N
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUsers[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApplicationUsers[0].FullName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.ApplicationUsers.Count; i++)
+        {
+            <tr>
+                <td>@(i + 1)</td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.ApplicationUsers[i].UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.ApplicationUsers[i].FullName)
+                </td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@Model.ApplicationUsers[i].Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -63,9 +63,9 @@
                         @Html.DisplayFor(modelItem => item.MeetingDetails)
                     </td>*@
                 <td>
-                    <a href="/Movies/Edit/1">Edit</a> |
-                    <a href="/Movies/Details/1">Details</a> |
-                    <a href="/Movies/Delete/1">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
                 </td>
             </tr>
         }
