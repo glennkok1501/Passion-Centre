@@ -62,10 +62,16 @@
                 @*<td>
                         @Html.DisplayFor(modelItem => item.MeetingDetails)
                     </td>*@
+                    
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Staff") || User.Identity.Name.ToString() == Model.Course[0].Username)
+                    {
+                    
+                            <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> 
+                            <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>                  
+                    }
+                
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
                 </td>
             </tr>
         }

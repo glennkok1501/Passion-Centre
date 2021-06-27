@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,6 +12,7 @@ using PassionCentre.Models;
 
 namespace PassionCentre.Pages.Courses
 {
+    [Authorize(Roles = "Admin, Staff")]
     public class EditModel : PageModel
     {
         private readonly PassionCentre.Data.PassionCentreContext _context;
@@ -36,6 +38,12 @@ namespace PassionCentre.Pages.Courses
             {
                 return NotFound();
             }
+
+            if (User.Identity.Name.ToString() != Course.Username)
+            {
+                return LocalRedirect("/Identity/Account/AccessDenied");
+            }
+
             return Page();
         }
 

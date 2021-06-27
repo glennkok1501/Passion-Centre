@@ -26,19 +26,22 @@ namespace PassionCentre.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly ReCaptcha _captcha;
+        private readonly RoleManager<ApplicationRole> _roleManager;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            ReCaptcha captcha)
+            ReCaptcha captcha,
+            RoleManager<ApplicationRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _captcha = captcha;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
@@ -109,6 +112,9 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    //Assign User Role to Reistering Users
+                    await _userManager.AddToRoleAsync(user, "User");
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -125,7 +131,7 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                     //    return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     //}
                     //else
-                    //{
+                    //{ 
                         //await _signInManager.SignInAsync(user, isPersistent: false);
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                         //return LocalRedirect(returnUrl);

@@ -47,7 +47,7 @@ namespace PassionCentre
             //        options.ClientSecret = Configuration["GoogleAuthentication:ClientSecret"];
             //    });
 
-            services.AddIdentity<ApplicationUser, Microsoft.AspNetCore.Identity.IdentityRole>()
+            services.AddIdentity<ApplicationUser, ApplicationRole>() //Edited Out Microsoft.AspNetCore.Identity. from IdentityRole
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<PassionCentreContext>()
                 .AddDefaultTokenProviders();
@@ -93,7 +93,7 @@ namespace PassionCentre
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<ApplicationRole> _roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -105,6 +105,8 @@ namespace PassionCentre
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            SeedData.SeedRoles(_roleManager);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity;
 using PassionCentre.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PassionCentre.Pages.Users
 {
+    [Authorize(Roles = "Admin, Staff")]
     public class EndLockOutModel : PageModel
     {
 

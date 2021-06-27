@@ -11,7 +11,6 @@ namespace PassionCentre.Pages.Users
 {
     public class LockOutModel : PageModel
     {
-
         private readonly UserManager<ApplicationUser> _userManager;
         public LockOutModel(UserManager<ApplicationUser> userManager)
         {

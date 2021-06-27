@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using PassionCentre.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PassionCentre.Pages.Users
 {
+    [Authorize(Roles = "Admin, Staff")]
     public class IndexModel : PageModel
     {
         private readonly PassionCentre.Data.PassionCentreContext _context;
