@@ -36,6 +36,16 @@ namespace PassionCentre
             services.AddDbContext<PassionCentreContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("PassionCentreContext")));
 
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+
+                    options.ClientId = Configuration["GoogleAuthentication:ClientID"];
+                    options.ClientSecret = Configuration["GoogleAuthentication:ClientSecret"];
+                });
+
             services.AddIdentity<ApplicationUser, Microsoft.AspNetCore.Identity.IdentityRole>()
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<PassionCentreContext>()

@@ -25,35 +25,19 @@ namespace PassionCentre.Models
                 context.Course.AddRange(
                     new Course
                     {
-                        Title = "Networking",
+                        Title = "Switches and Routers",
                         Subject = "Networking",
                         Date = DateTime.Parse("2021-07-12"),
                         Username = "Tom Snr",
                         Description = "Networking beginner's guide"
                     },
-
                     new Course
                     {
-                        //Title = "Ghostbusters ",
-                        //ReleaseDate = DateTime.Parse("1984-3-13"),
-                        //Genre = "Comedy",
-                        //Price = 8.99M
-                    },
-
-                    new Course
-                    {
-                        //Title = "Ghostbusters 2",
-                        //ReleaseDate = DateTime.Parse("1986-2-23"),
-                        //Genre = "Comedy",
-                        //Price = 9.99M
-                    },
-
-                    new Course
-                    {
-                        //Title = "Rio Bravo",
-                        //ReleaseDate = DateTime.Parse("1959-4-15"),
-                        //Genre = "Western",
-                        //Price = 3.99M
+                        Title = "Mobile App Development",
+                        Subject = "Android",
+                        Date = DateTime.Parse("2021-07-14"),
+                        Username = "Daniel Ong",
+                        Description = "Introduction to Android Application Development"
                     }
                 );
                 context.SaveChanges();
