@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using PassionCentre.Models;
+using PassionCentre.Services;
 
 namespace PassionCentre.Areas.Identity.Pages.Account
 {
@@ -19,11 +20,16 @@ namespace PassionCentre.Areas.Identity.Pages.Account
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly ReCaptcha _captcha;
 
-        public ForgotPasswordModel(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public ForgotPasswordModel(
+            UserManager<ApplicationUser> userManager, 
+            IEmailSender emailSender,
+            ReCaptcha captcha)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _captcha = captcha;
         }
 
         [BindProperty]
@@ -40,6 +46,19 @@ namespace PassionCentre.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
+                if (!Request.Form.ContainsKey("g-recaptcha-response"))
+                {
+                    return Page();
+                }
+                else
+                {
+                    var captcha = Request.Form["g-recaptcha-response"].ToString();
+                    if (!await _captcha.IsValid(captcha))
+                    {
+                        ModelState.AddModelError(string.Empty, "Please submit CAPTCHA");
+                        return Page();
+                    }
+                }
                 var user = await _userManager.FindByEmailAsync(Input.Email);
                 if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 {

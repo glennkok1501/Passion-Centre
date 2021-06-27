@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using PassionCentre.Models;
+using PassionCentre.Services;
 
 namespace PassionCentre.Areas.Identity.Pages.Account
 {
@@ -21,14 +22,17 @@ namespace PassionCentre.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ReCaptcha _captcha;
 
         public LoginModel(SignInManager<ApplicationUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            ReCaptcha captcha)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _captcha = captcha;
         }
 
         [BindProperty]
@@ -78,6 +82,20 @@ namespace PassionCentre.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
+                if (!Request.Form.ContainsKey("g-recaptcha-response")) 
+                {
+                    return Page();
+                }
+                else
+                {
+                    var captcha = Request.Form["g-recaptcha-response"].ToString();
+                    if (!await _captcha.IsValid(captcha))
+                    {
+                        ModelState.AddModelError(string.Empty, "Please submit CAPTCHA");
+                        return Page();
+                    }
+                }
+
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: true);

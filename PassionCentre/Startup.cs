@@ -41,6 +41,9 @@ namespace PassionCentre
                 .AddEntityFrameworkStores<PassionCentreContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddHttpClient<ReCaptcha>(options =>
+                options.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify"));
+
             services.AddTransient<IEmailSender, EmailSender>(options =>
             new EmailSender(
                 Configuration["EmailSender:Host"],

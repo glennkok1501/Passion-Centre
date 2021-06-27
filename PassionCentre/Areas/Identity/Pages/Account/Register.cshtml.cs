@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using PassionCentre.Models;
+using PassionCentre.Services;
 
 namespace PassionCentre.Areas.Identity.Pages.Account
 {
@@ -24,17 +25,20 @@ namespace PassionCentre.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ReCaptcha _captcha;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ReCaptcha captcha)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _captcha = captcha;
         }
 
         [BindProperty]
@@ -85,6 +89,20 @@ namespace PassionCentre.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                if (!Request.Form.ContainsKey("g-recaptcha-response"))
+                {
+                    return Page();
+                }
+                else
+                {
+                    var captcha = Request.Form["g-recaptcha-response"].ToString();
+                    if (!await _captcha.IsValid(captcha))
+                    {
+                        ModelState.AddModelError(string.Empty, "Please submit CAPTCHA");
+                        return Page();
+                    }
+                }
+
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FullName = Input.FullName, BirthDate = Input.BirthDate};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
