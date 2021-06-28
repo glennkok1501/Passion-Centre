@@ -29,7 +29,7 @@ namespace PassionCentre.Models
                         Title = "Switches and Routers",
                         Subject = "Networking",
                         Date = DateTime.Parse("2021-07-12"),
-                        Username = "Tom Snr",
+                        Username = "trainer1@gmail.com",
                         Description = "Networking beginner's guide"
                     },
                     new Course
@@ -37,7 +37,7 @@ namespace PassionCentre.Models
                         Title = "Mobile App Development",
                         Subject = "Android",
                         Date = DateTime.Parse("2021-07-14"),
-                        Username = "Daniel Ong",
+                        Username = "trainer2@gmail.com",
                         Description = "Introduction to Android Application Development"
                     }
                 );
