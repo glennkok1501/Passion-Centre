@@ -93,12 +93,11 @@ namespace PassionCentre.Models
                 CreateAsync(role).Result;
             }
 
-            // Seeding Users
-            if (userManager.FindByNameAsync("admin1").Result == null)
+            if (userManager.FindByNameAsync("superuser").Result == null)
             {
                 var user = new ApplicationUser();
-                user.UserName = "admin1"; 
-                user.FullName = "admin";
+                user.UserName = "superuser"; 
+                user.FullName = "Superuser";
                 user.Email = "passioncentre2021@gmail.com";
                 user.BirthDate = DateTime.Now; 
                 user.EmailConfirmed = true; 
@@ -108,12 +107,29 @@ namespace PassionCentre.Models
                     userManager.AddToRoleAsync(user, "Admin").Wait();
                 }
             }
-            
+
+            //To remove before deployment. Used for testing purposes
+            // Seeding Users
+            if (userManager.FindByNameAsync("admin1").Result == null)
+            {
+                var user = new ApplicationUser();
+                user.UserName = "admin1";
+                user.FullName = "admin1";
+                user.Email = "admin1@gmail.com";
+                user.BirthDate = DateTime.Now;
+                user.EmailConfirmed = true;
+                IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Admin").Wait();
+                }
+            }
+
             if (userManager.FindByNameAsync("admin2").Result == null)
             {
                 var user = new ApplicationUser();
                 user.UserName = "admin2";
-                user.FullName = "admin";
+                user.FullName = "admin2";
                 user.Email = "admin2@gmail.com";
                 user.BirthDate = DateTime.Now;
                 user.EmailConfirmed = true;
