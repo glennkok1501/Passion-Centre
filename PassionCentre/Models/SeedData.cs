@@ -46,7 +46,7 @@ namespace PassionCentre.Models
             }
         }
 
-        public static void SeedRoles(RoleManager<ApplicationRole> roleManager)
+        public static void SeedRoles(RoleManager<ApplicationRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             if (!roleManager.RoleExistsAsync("Admin").Result)
             {
@@ -82,6 +82,17 @@ namespace PassionCentre.Models
                 role.Description = "Normal User";
                 IdentityResult roleResult = roleManager.
                 CreateAsync(role).Result;
+            }
+
+            //@Collin to work on, tried but doesn't seem to work - Glenn
+            if (userManager.FindByNameAsync("Superuser").Result == null)
+            {
+                var user = new ApplicationUser { UserName = "Superuser", FullName = "Superuser", BirthDate = DateTime.Now, EmailConfirmed = true };
+                IdentityResult result = userManager.CreateAsync(user, "P@ssword123").Result;
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "Admin").Wait();
+                }
             }
         }
     }

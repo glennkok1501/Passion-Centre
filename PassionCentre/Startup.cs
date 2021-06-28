@@ -93,7 +93,9 @@ namespace PassionCentre
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, RoleManager<ApplicationRole> _roleManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, 
+            RoleManager<ApplicationRole> _roleManager,
+            UserManager<ApplicationUser> _userManager)
         {
             if (env.IsDevelopment())
             {
@@ -106,7 +108,7 @@ namespace PassionCentre
                 app.UseHsts();
             }
 
-            SeedData.SeedRoles(_roleManager);
+            SeedData.SeedRoles(_roleManager, _userManager);
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
