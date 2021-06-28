@@ -53,6 +53,11 @@ namespace PassionCentre.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+
+            [Required]
+            [Display(Name = "Username")]
+            public string UserName { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -106,7 +111,7 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                     }
                 }
 
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, FullName = Input.FullName, BirthDate = Input.BirthDate};
+                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email, FullName = Input.FullName, BirthDate = Input.BirthDate, DateTimeStamp = DateTime.Now};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

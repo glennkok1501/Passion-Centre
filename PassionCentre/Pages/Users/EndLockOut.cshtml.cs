@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PassionCentre.Pages.Users
 {
-    [Authorize(Roles = "Admin, Staff")]
+    //[Authorize(Roles = "Admin, Staff")]
     public class EndLockOutModel : PageModel
     {
 
