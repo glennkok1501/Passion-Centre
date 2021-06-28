@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PassionCentre.Pages.Users
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class DeleteModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
