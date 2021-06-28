@@ -47,7 +47,8 @@ namespace PassionCentre
             //        options.ClientSecret = Configuration["GoogleAuthentication:ClientSecret"];
             //    });
 
-            services.AddIdentity<ApplicationUser, ApplicationRole>() //Edited Out Microsoft.AspNetCore.Identity. from IdentityRole
+            services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
+                options.SignIn.RequireConfirmedAccount = true) //Edited Out Microsoft.AspNetCore.Identity. from IdentityRole
                 .AddDefaultUI()
                 .AddEntityFrameworkStores<PassionCentreContext>()
                 .AddDefaultTokenProviders();
