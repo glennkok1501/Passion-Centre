@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using PassionCentre.Models;
 
 namespace PassionCentre.Pages.Users
 {
+    [Authorize(Roles = "Admin, Staff")]
     public class LockOutModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
