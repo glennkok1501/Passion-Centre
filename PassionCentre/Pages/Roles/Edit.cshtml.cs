@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PassionCentre.Pages.Roles
 {
-    [Authorize(Roles = "Admin, Staff")]
+    [Authorize(Roles = "Admin, Staff")] //I don't think Staff should be able to edit Roles - Glenn
     public class EditModel : PageModel
     {
         private readonly RoleManager<ApplicationRole> _roleManager;
