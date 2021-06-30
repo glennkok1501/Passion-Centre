@@ -190,7 +190,7 @@ namespace PassionCentre.Models
                 var user = new ApplicationUser();
                 user.UserName = "BobbyLim";
                 user.FullName = "Bobby Lim";
-                user.Email = "tariner2@gmail.com";
+                user.Email = "trainer2@gmail.com";
                 user.BirthDate = DateTime.Now;
                 user.EmailConfirmed = true;
                 IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
@@ -205,7 +205,7 @@ namespace PassionCentre.Models
                 var user = new ApplicationUser();
                 user.UserName = "JaymenNg";
                 user.FullName = "Jaymen Ng";
-                user.Email = "tariner3@gmail.com";
+                user.Email = "trainer3@gmail.com";
                 user.BirthDate = DateTime.Now;
                 user.EmailConfirmed = true;
                 IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;

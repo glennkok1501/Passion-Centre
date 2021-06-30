@@ -89,8 +89,8 @@
                 @Html.DropDownListFor(m => m.selectedusername, Model.UsersSelectList, "Select User", new { @class = "form-control" }) <br />
                 @Html.Label("Assign Role : ") <br />
                 @*Test*@
-                @Html.RadioButtonFor(m => m.selectedrolename, "Trainer") Trainer <br /> 
-                @*@Html.DropDownListFor(m => m.selectedrolename, , "Select Role", new { @class = "form-control" })*@
+                @*@Html.RadioButtonFor(m => m.selectedrolename, "Trainer") Trainer <br />*@
+                @Html.DropDownListFor(m => m.selectedrolename, Model.StaffRolesSelectList, new { @class = "form-control" })
                 <br />
                 <input type="submit" value="Assign" />
             </form>

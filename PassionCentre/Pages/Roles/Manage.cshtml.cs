@@ -27,7 +27,13 @@ namespace PassionCentre.Pages.Courses
         }
 
         public SelectList RolesSelectList;
+        public SelectList StaffRolesSelectList;
         public SelectList UsersSelectList;
+
+        public List<string> staffrolePermit = new List<string>()
+            {
+                "Trainer",
+            };
 
         public string selectedrolename { set; get; }
         public string selectedusername { set; get; }
@@ -59,11 +65,13 @@ namespace PassionCentre.Pages.Courses
         }
 
         public async Task OnGetAsync()
-        {   
+        {
             IQueryable<string> RoleQuery = from m in _roleManager.Roles orderby m.Name select m.Name;
+            IQueryable<string> StaffRoleQuery = from n in _roleManager.Roles where (staffrolePermit.Contains(n.Name)) orderby n.Name select n.Name;
             IQueryable<string> UsersQuery = from u in _context.Users orderby u.UserName select u.UserName;
 
             RolesSelectList = new SelectList(await RoleQuery.Distinct().ToListAsync());
+            StaffRolesSelectList = new SelectList(await StaffRoleQuery.Distinct().ToListAsync());
             UsersSelectList = new SelectList(await UsersQuery.Distinct().ToListAsync());
             // Get all the roles 
             var roles = from r in _roleManager.Roles
@@ -79,7 +87,26 @@ namespace PassionCentre.Pages.Courses
             }
 
             ApplicationUser AppUser = _context.Users.SingleOrDefault(u => u.UserName == selectedusername);
-            ApplicationRole AppRole = await _roleManager.FindByNameAsync(selectedrolename);
+            ApplicationRole AppRole = null;
+            if (User.IsInRole("Admin"))
+            {
+                AppRole = await _roleManager.FindByNameAsync(selectedrolename);
+            }
+            else if(User.IsInRole("Staff"))
+            {
+                if (staffrolePermit.Contains(selectedrolename))
+                {
+                    AppRole = await _roleManager.FindByNameAsync(selectedrolename);
+                }
+                else
+                {
+                    return RedirectToPage("../Error");
+                }
+            }
+            else
+            {
+                return RedirectToPage("../Error");
+            }
 
             IdentityResult roleResult = await _userManager.AddToRoleAsync(AppUser, AppRole.Name);
 
