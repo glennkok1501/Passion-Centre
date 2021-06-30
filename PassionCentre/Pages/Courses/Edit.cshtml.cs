@@ -12,7 +12,7 @@ using PassionCentre.Models;
 
 namespace PassionCentre.Pages.Courses
 {
-    [Authorize(Roles = "Admin, Staff")]
+    [Authorize(Roles = "Admin, Staff, Trainer")]
     public class EditModel : PageModel
     {
         private readonly PassionCentre.Data.PassionCentreContext _context;
