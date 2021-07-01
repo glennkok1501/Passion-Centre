@@ -29,10 +29,16 @@ namespace PassionCentre.Pages.Courses
         public SelectList RolesSelectList;
         public SelectList StaffRolesSelectList;
         public SelectList UsersSelectList;
+        public SelectList StaffUsersSelectList;
 
         public List<string> staffrolePermit = new List<string>()
             {
                 "Trainer",
+            };
+
+        public List<string> staffuserPermit = new List<string>()
+            {
+                
             };
 
         public string selectedrolename { set; get; }
@@ -66,13 +72,25 @@ namespace PassionCentre.Pages.Courses
 
         public async Task OnGetAsync()
         {
+            foreach (var a in _context.Users)
+            {
+                if (await _userManager.IsInRoleAsync(a, "User") && !await _userManager.IsInRoleAsync(a, "Trainer"))
+                {
+                    staffuserPermit.Add(a.UserName);
+                }
+            }
+
             IQueryable<string> RoleQuery = from m in _roleManager.Roles orderby m.Name select m.Name;
-            IQueryable<string> StaffRoleQuery = from n in _roleManager.Roles where (staffrolePermit.Contains(n.Name)) orderby n.Name select n.Name;
+            IQueryable<string> StaffRoleQuery = from n in _roleManager.Roles where staffrolePermit.Contains(n.Name) orderby n.Name select n.Name;
             IQueryable<string> UsersQuery = from u in _context.Users orderby u.UserName select u.UserName;
+            IQueryable<string> StaffUsersQuery = from v in _context.Users where staffuserPermit.Contains(v.UserName) orderby v.UserName select v.UserName;
 
             RolesSelectList = new SelectList(await RoleQuery.Distinct().ToListAsync());
             StaffRolesSelectList = new SelectList(await StaffRoleQuery.Distinct().ToListAsync());
             UsersSelectList = new SelectList(await UsersQuery.Distinct().ToListAsync());
+            StaffUsersSelectList = new SelectList(await StaffUsersQuery.Distinct().ToListAsync());
+
+
             // Get all the roles 
             var roles = from r in _roleManager.Roles
                         select r;
@@ -92,7 +110,7 @@ namespace PassionCentre.Pages.Courses
             {
                 AppRole = await _roleManager.FindByNameAsync(selectedrolename);
             }
-            else if(User.IsInRole("Staff"))
+            else if (User.IsInRole("Staff"))
             {
                 if (staffrolePermit.Contains(selectedrolename))
                 {
