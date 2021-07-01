@@ -24,5 +24,7 @@ namespace PassionCentre.Data
         }
 
         public DbSet<PassionCentre.Models.Course> Course { get; set; }
+
+        public DbSet<PassionCentre.Models.AuditRecord> AuditRecords { get; set; }
     }
 }
