@@ -229,6 +229,21 @@ namespace PassionCentre.Models
                     userManager.AddToRoleAsync(user, "User").Wait();
                 }
             }
+
+            if (userManager.FindByNameAsync("user2").Result == null)
+            {
+                var user = new ApplicationUser();
+                user.UserName = "user2";
+                user.FullName = "user";
+                user.Email = "user2@gmail.com";
+                user.BirthDate = DateTime.Now;
+                user.EmailConfirmed = true;
+                IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(user, "User").Wait();
+                }
+            }
         }
     }
 }
