@@ -36,8 +36,9 @@ namespace PassionCentre.Pages.Courses
                 return Page();
             }
 
+            Course.Username = User.Identity.Name.ToString();
             _context.Course.Add(Course);
-            //await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             // Once a record is added, create an audit record
             if (await _context.SaveChangesAsync() > 0)
