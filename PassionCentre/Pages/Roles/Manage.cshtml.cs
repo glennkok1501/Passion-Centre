@@ -105,26 +105,8 @@ namespace PassionCentre.Pages.Courses
             }
 
             ApplicationUser AppUser = _context.Users.SingleOrDefault(u => u.UserName == selectedusername);
-            ApplicationRole AppRole = null;
-            if (User.IsInRole("Admin"))
-            {
-                AppRole = await _roleManager.FindByNameAsync(selectedrolename);
-            }
-            else if (User.IsInRole("Staff"))
-            {
-                if (staffrolePermit.Contains(selectedrolename))
-                {
-                    AppRole = await _roleManager.FindByNameAsync(selectedrolename);
-                }
-                else
-                {
-                    return RedirectToPage("../Error");
-                }
-            }
-            else
-            {
-                return RedirectToPage("../Error");
-            }
+
+            ApplicationRole AppRole = await _roleManager.FindByNameAsync(selectedrolename);
 
             IdentityResult roleResult = await _userManager.AddToRoleAsync(AppUser, AppRole.Name);
 
