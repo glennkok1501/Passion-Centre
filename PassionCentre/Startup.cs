@@ -36,16 +36,16 @@ namespace PassionCentre
             services.AddDbContext<PassionCentreContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("PassionCentreContext")));
 
-            //DO NOT UNCOMMENT- GLENN
-            //services.AddAuthentication()
-            //    .AddGoogle(options =>
-            //    {
-            //        IConfigurationSection googleAuthNSection =
-            //            Configuration.GetSection("Authentication:Google");
+            //Google Authentication
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
 
-            //        options.ClientId = Configuration["GoogleAuthentication:ClientID"];
-            //        options.ClientSecret = Configuration["GoogleAuthentication:ClientSecret"];
-            //    });
+                    options.ClientId = Configuration["GoogleAuthentication:ClientID"];
+                    options.ClientSecret = Configuration["GoogleAuthentication:ClientSecret"];
+                });
 
             services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
                 options.SignIn.RequireConfirmedAccount = true) //Edited Out Microsoft.AspNetCore.Identity. from IdentityRole
@@ -56,14 +56,14 @@ namespace PassionCentre
             services.AddHttpClient<ReCaptcha>(options =>
                 options.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify"));
 
-            //DO NOT UNCOMMENT- GLENN
-            //services.AddTransient<IEmailSender, EmailSender>(options =>
-            //new EmailSender(
-            //    Configuration["EmailSender:Host"],
-            //    Configuration.GetValue<int>("EmailSender:Port"),
-            //    Configuration.GetValue<bool>("EmailSender:EnableSSL"),
-            //    Configuration["EmailSender:UserName"],
-            //    Configuration["EmailSender:Password"]));
+            //Email Sender Configuration
+            services.AddTransient<IEmailSender, EmailSender>(options =>
+            new EmailSender(
+                Configuration["EmailSender:Host"],
+                Configuration.GetValue<int>("EmailSender:Port"),
+                Configuration.GetValue<bool>("EmailSender:EnableSSL"),
+                Configuration["EmailSender:UserName"],
+                Configuration["EmailSender:Password"]));
 
             services.AddMvc().AddRazorPagesOptions(options =>
              {
@@ -86,8 +86,8 @@ namespace PassionCentre
                 options.Lockout.AllowedForNewUsers = true;
                 // User settings
                 options.User.RequireUniqueEmail = true;
-                //DO NOT UNCOMMENT- GLENN
-                //options.SignIn.RequireConfirmedEmail = true;
+                //Require Email confirmation to sign in
+                options.SignIn.RequireConfirmedEmail = true;
             });
 
 
