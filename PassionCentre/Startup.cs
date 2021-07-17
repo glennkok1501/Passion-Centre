@@ -90,6 +90,14 @@ namespace PassionCentre
                 options.SignIn.RequireConfirmedEmail = true;
             });
 
+            //Session Cookie Configuration
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.SlidingExpiration = true;
+            });
+
 
         }
 
