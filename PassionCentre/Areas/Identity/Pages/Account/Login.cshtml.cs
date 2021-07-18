@@ -130,6 +130,19 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
+                    // Login failed attempt - create an audit record
+                    var auditrecord = new AuditRecord();
+                    auditrecord.AuditActionType = "Locked Out Account";
+                    auditrecord.DateStamp = DateTime.Today.Date;
+                    auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+                    auditrecord.KeyCourseFieldID = 999;
+                    // 999 – dummy record 
+
+                    auditrecord.Username = Input.UserName;
+                    auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                    // save the username used for the failed login
+                    _context.AuditRecords.Add(auditrecord);
+                    await _context.SaveChangesAsync();
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }
