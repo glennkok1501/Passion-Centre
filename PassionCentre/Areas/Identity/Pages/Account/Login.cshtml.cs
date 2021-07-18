@@ -106,22 +106,6 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
-                else
-                {
-                    // Login failed attempt - create an audit record
-                    var auditrecord = new AuditRecord();
-                    auditrecord.AuditActionType = "Failed Login";
-                    auditrecord.DateStamp = DateTime.Today.Date;
-                    auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
-                    auditrecord.KeyCourseFieldID = 999;
-                    // 999 – dummy record 
-
-                    auditrecord.Username = Input.UserName;
-                    auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-                    // save the username used for the failed login
-                    _context.AuditRecords.Add(auditrecord);
-                    await _context.SaveChangesAsync();
-                }
 
 
                 if (result.RequiresTwoFactor)

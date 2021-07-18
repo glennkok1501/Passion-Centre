@@ -246,20 +246,11 @@ namespace PassionCentre.Migrations
                     b.Property<DateTime>("DateStamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FieldEdited")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("IPAddress")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("KeyCourseFieldID")
                         .HasColumnType("int");
-
-                    b.Property<string>("NewValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OldValue")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TimeStamp")
                         .HasColumnType("nvarchar(max)");

@@ -35,17 +35,5 @@ namespace PassionCentre.Models
         [Display(Name = "IP Address ")]
         public string IPAddress { get; set; }
         //Store the IP address of the user who edited
-
-        [Display(Name = "Field Edited ")]
-        public string FieldEdited { get; set; }
-        //Store the Field that was edited
-
-        [Display(Name = "Old Value ")]
-        public string OldValue { get; set; }
-        //Store the object before changes made
-
-        [Display(Name = "New Value ")]
-        public string NewValue { get; set; }
-        //Store the object after changes made
     }
 }
