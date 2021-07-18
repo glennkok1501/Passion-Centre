@@ -15,9 +15,11 @@ namespace PassionCentre.Pages.Users
     public class DeleteModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        public DeleteModel(UserManager<ApplicationUser> userManager)
+        private readonly PassionCentre.Data.PassionCentreContext _context;
+        public DeleteModel(UserManager<ApplicationUser> userManager, PassionCentre.Data.PassionCentreContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
         [BindProperty]
         public ApplicationUser ApplicationUser { get; set; }
@@ -40,6 +42,18 @@ namespace PassionCentre.Pages.Users
             {
                 return NotFound();
             }
+            ApplicationUser = await _userManager.FindByIdAsync(id);
+            var auditrecord = new AuditRecord();
+            auditrecord.AuditActionType = "Delete User Record";
+            auditrecord.DateStamp = DateTime.Today.Date;
+            auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+            auditrecord.KeyCourseFieldID = 99999;
+            //99999 -User record
+            var userID = User.Identity.Name.ToString();
+            auditrecord.Username = userID;
+            auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            _context.AuditRecords.Add(auditrecord);
+            await _context.SaveChangesAsync();
             ApplicationUser = await _userManager.FindByIdAsync(id);
             IdentityResult userRusult = await _userManager.DeleteAsync(ApplicationUser);
             return RedirectToPage("./Index");

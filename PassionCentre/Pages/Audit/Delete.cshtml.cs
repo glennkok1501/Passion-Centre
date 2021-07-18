@@ -51,6 +51,15 @@ namespace PassionCentre.Pages.Audit
 
             if (AuditRecord != null)
             {
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Delete Audit Record";
+                auditrecord.DateStamp = DateTime.Today.Date;
+                auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+                auditrecord.KeyCourseFieldID = AuditRecord.Audit_ID;
+                var userID = User.Identity.Name.ToString();
+                auditrecord.Username = userID;
+                auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                _context.AuditRecords.Add(auditrecord);
                 _context.AuditRecords.Remove(AuditRecord);
                 await _context.SaveChangesAsync();
             }

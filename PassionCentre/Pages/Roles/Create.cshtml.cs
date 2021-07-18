@@ -17,9 +17,12 @@ namespace PassionCentre.Pages.Roles
     {
         private readonly RoleManager<ApplicationRole> _roleManager;
 
-        public CreateModel(RoleManager<ApplicationRole> roleManager)
+        private readonly PassionCentre.Data.PassionCentreContext _context;
+
+        public CreateModel(RoleManager<ApplicationRole> roleManager, PassionCentre.Data.PassionCentreContext context)
         {
             _roleManager = roleManager;
+            _context = context;
         }
 
         public IActionResult OnGet()
@@ -39,6 +42,19 @@ namespace PassionCentre.Pages.Roles
 
             ApplicationRole.CreatedDate = DateTime.UtcNow;
             ApplicationRole.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            var auditrecord = new AuditRecord();
+            auditrecord.AuditActionType = "Add ApplicationRole Record";
+            auditrecord.DateStamp = DateTime.Today.Date;
+            auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+            auditrecord.KeyCourseFieldID = 9999;
+            // 9999 – roles record 
+
+            // Get current logged-in user
+            var userID = User.Identity.Name.ToString();
+            auditrecord.Username = userID;
+            auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            _context.AuditRecords.Add(auditrecord);
+            await _context.SaveChangesAsync();
 
             IdentityResult roleRuslt = await _roleManager.CreateAsync(ApplicationRole);
 

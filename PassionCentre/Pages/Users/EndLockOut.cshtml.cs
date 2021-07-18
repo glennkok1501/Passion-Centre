@@ -15,9 +15,11 @@ namespace PassionCentre.Pages.Users
     {
 
         private readonly UserManager<ApplicationUser> _userManager;
-        public EndLockOutModel(UserManager<ApplicationUser> userManager)
+        private readonly PassionCentre.Data.PassionCentreContext _context;
+        public EndLockOutModel(UserManager<ApplicationUser> userManager, PassionCentre.Data.PassionCentreContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
         [BindProperty]
         public ApplicationUser ApplicationUser { get; set; }
@@ -35,6 +37,19 @@ namespace PassionCentre.Pages.Users
             var result = await _userManager.SetLockoutEndDateAsync(ApplicationUser, null);
             if (result.Succeeded)
             {
+                // Create an auditrecord object
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Unlock User Record";
+                auditrecord.DateStamp = DateTime.Today.Date;
+                auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+                auditrecord.KeyCourseFieldID = 99999;
+                //99999 -User record
+                // Get current logged-in user
+                var userID = User.Identity.Name.ToString();
+                auditrecord.Username = userID;
+                auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                _context.AuditRecords.Add(auditrecord);
+                await _context.SaveChangesAsync();
                 await _userManager.ResetAccessFailedCountAsync(ApplicationUser);
             }
             return Page();
