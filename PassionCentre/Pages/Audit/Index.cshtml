@@ -52,15 +52,6 @@
                 @Html.DisplayFor(modelItem => item.IPAddress)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FieldEdited)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OldValue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NewValue)
-            </td>
-            <td>
                 @if (User.IsInRole("Admin"))
                 {
                     <a asp-page="./Edit" asp-route-id="@item.Audit_ID">Edit</a>

@@ -7,6 +7,8 @@ namespace PassionCentre.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+          
+
             migrationBuilder.CreateTable(
                 name: "AuditRecords",
                 columns: table => new
@@ -18,21 +20,23 @@ namespace PassionCentre.Migrations
                     DateStamp = table.Column<DateTime>(nullable: false),
                     TimeStamp = table.Column<string>(nullable: true),
                     KeyCourseFieldID = table.Column<int>(nullable: false),
-                    IPAddress = table.Column<string>(nullable: true),
-                    FieldEdited = table.Column<string>(nullable: true),
-                    OldValue = table.Column<string>(nullable: true),
-                    NewValue = table.Column<string>(nullable: true)
+                    IPAddress = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AuditRecords", x => x.Audit_ID);
                 });
+
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+
+
             migrationBuilder.DropTable(
                 name: "AuditRecords");
+
+           
         }
     }
 }

@@ -52,23 +52,7 @@ namespace PassionCentre.Pages.Courses
             if (Course != null)
             {
                 _context.Course.Remove(Course);
-                //  await _context.SaveChangesAsync();
-
-                // Once a record is deleted, create an audit record
-                if (await _context.SaveChangesAsync() > 0)
-                {
-                    var auditrecord = new AuditRecord();
-                    auditrecord.AuditActionType = "Delete Movie Record";
-                    auditrecord.DateStamp = DateTime.Today.Date;
-                    auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
-                    auditrecord.KeyCourseFieldID = Course.ID;
-                    var userID = User.Identity.Name.ToString();
-                    auditrecord.Username = userID;
-                    auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-                    _context.AuditRecords.Add(auditrecord);
-                    await _context.SaveChangesAsync();
-                }
-
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
