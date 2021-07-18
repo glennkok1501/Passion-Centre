@@ -39,6 +39,11 @@ namespace PassionCentre.Pages.Courses
                 return NotFound();
             }
 
+            if (User.IsInRole("Admin") || User.IsInRole("Staff"))
+            {
+                return Page();
+            }
+
             if (User.Identity.Name.ToString() != Course.Username)
             {
                 return LocalRedirect("/Identity/Account/AccessDenied");

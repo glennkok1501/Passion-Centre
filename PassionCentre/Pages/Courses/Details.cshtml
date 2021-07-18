@@ -59,10 +59,10 @@
     @if (User.IsInRole("Admin") || User.IsInRole("Staff") || User.Identity.Name.ToString() == Model.Course.Username)
     {
         <td>
-            <a asp-page="./Edit" asp-route-id="@Model.Course.ID">Edit</a> |
+            <a class="btn btn-dark" asp-page="./Edit" asp-route-id="@Model.Course.ID">Edit</a> |
         </td>
     }
     <td>
-        <a asp-page="./Index">Back to List</a>
+        <a class="btn btn-dark" asp-page="./Index">Back to List</a>
     </td>
 </div>

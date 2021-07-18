@@ -2,7 +2,7 @@
 @model PassionCentre.Pages.Courses.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Our Courses";
 }
 
 <h1>Index</h1>
@@ -66,10 +66,10 @@
                 <td>
                     @if (User.IsInRole("Admin") || User.IsInRole("Staff") || User.Identity.Name.ToString() == item.Username)
                     {                    
-                            <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> 
-                            <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>                  
+                            <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.ID">Edit</a> 
+                            <a class="btn btn-warning" asp-page="./Delete" asp-route-id="@item.ID">Delete</a>                  
                     }
-                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a>
+                    <a class="btn btn-warning" asp-page="./Details" asp-route-id="@item.ID">Details</a>
                 </td>
             </tr>
         }
