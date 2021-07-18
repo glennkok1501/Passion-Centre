@@ -16,10 +16,12 @@ namespace PassionCentre.Pages.Roles
     public class DeleteModel : PageModel
     {
         private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly PassionCentre.Data.PassionCentreContext _context;
 
-        public DeleteModel(RoleManager<ApplicationRole> roleManager)
+        public DeleteModel(RoleManager<ApplicationRole> roleManager, PassionCentre.Data.PassionCentreContext context)
         {
             _roleManager = roleManager;
+            _context = context;
         }
 
         [BindProperty]
@@ -47,6 +49,17 @@ namespace PassionCentre.Pages.Roles
             {
                 return NotFound();
             }
+            var auditrecord = new AuditRecord();
+            auditrecord.AuditActionType = "Delete ApplicationRole Record";
+            auditrecord.DateStamp = DateTime.Today.Date;
+            auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+            auditrecord.KeyCourseFieldID = 9999;
+            // 9999 – roles record 
+            var userID = User.Identity.Name.ToString();
+            auditrecord.Username = userID;
+            auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            _context.AuditRecords.Add(auditrecord);
+            await _context.SaveChangesAsync();
 
             ApplicationRole = await _roleManager.FindByIdAsync(id);
             IdentityResult roleRuslt = await _roleManager.DeleteAsync(ApplicationRole);
