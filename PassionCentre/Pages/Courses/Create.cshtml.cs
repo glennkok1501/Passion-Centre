@@ -37,6 +37,17 @@ namespace PassionCentre.Pages.Courses
             }
 
             Course.Username = User.Identity.Name.ToString();
+            // Create an auditrecord object
+            var auditrecord = new AuditRecord();
+            auditrecord.AuditActionType = "Add Course Record";
+            auditrecord.DateStamp = DateTime.Today.Date;
+            auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+            auditrecord.KeyCourseFieldID = Course.ID;
+            // Get current logged-in user
+            var userID = User.Identity.Name.ToString();
+            auditrecord.Username = userID;
+            auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            _context.AuditRecords.Add(auditrecord);
             _context.Course.Add(Course);
             await _context.SaveChangesAsync();
 

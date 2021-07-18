@@ -17,11 +17,12 @@ namespace PassionCentre.Pages.Roles
     public class EditModel : PageModel
     {
         private readonly RoleManager<ApplicationRole> _roleManager;
+        private readonly PassionCentre.Data.PassionCentreContext _context;
 
-
-        public EditModel(RoleManager<ApplicationRole> roleManager)
+        public EditModel(RoleManager<ApplicationRole> roleManager, PassionCentre.Data.PassionCentreContext context)
         {
             _roleManager = roleManager;
+            _context = context;
         }
 
         [BindProperty]
@@ -60,6 +61,18 @@ namespace PassionCentre.Pages.Roles
 
             if (roleRuslt.Succeeded)
             {
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Edit ApplicationRole Record";
+                auditrecord.DateStamp = DateTime.Today.Date;
+                auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+                auditrecord.KeyCourseFieldID = 9999;
+                // 9999 – roles record 
+                // Get current logged-in user
+                var userID = User.Identity.Name.ToString();
+                auditrecord.Username = userID;
+                auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                _context.AuditRecords.Add(auditrecord);
+                await _context.SaveChangesAsync();
                 return RedirectToPage("./Index");
 
             }

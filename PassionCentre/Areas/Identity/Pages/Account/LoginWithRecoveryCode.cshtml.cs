@@ -17,11 +17,13 @@ namespace PassionCentre.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginWithRecoveryCodeModel> _logger;
+        private readonly PassionCentre.Data.PassionCentreContext _context;
 
-        public LoginWithRecoveryCodeModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginWithRecoveryCodeModel> logger)
+        public LoginWithRecoveryCodeModel(SignInManager<ApplicationUser> signInManager, ILogger<LoginWithRecoveryCodeModel> logger, PassionCentre.Data.PassionCentreContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -73,6 +75,22 @@ namespace PassionCentre.Areas.Identity.Pages.Account
             {
                 _logger.LogInformation("User with ID '{UserId}' logged in with a recovery code.", user.Id);
                 return LocalRedirect(returnUrl ?? Url.Content("~/"));
+            }
+            else
+            {
+                // Login failed attempt - create an audit record
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Failed Login";
+                auditrecord.DateStamp = DateTime.Today.Date;
+                auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+                auditrecord.KeyCourseFieldID = 999;
+                // 999 – dummy record 
+
+                auditrecord.Username = user.UserName;
+                auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                // save the username used for the failed login
+                _context.AuditRecords.Add(auditrecord);
+                await _context.SaveChangesAsync();
             }
             if (result.IsLockedOut)
             {

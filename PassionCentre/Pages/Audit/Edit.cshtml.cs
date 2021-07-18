@@ -54,6 +54,15 @@ namespace PassionCentre.Pages.Audit
 
             try
             {
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Edit Audit Record";
+                auditrecord.DateStamp = DateTime.Today.Date;
+                auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+                auditrecord.KeyCourseFieldID = AuditRecord.Audit_ID;
+                var userID = User.Identity.Name.ToString();
+                auditrecord.Username = userID;
+                auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                _context.AuditRecords.Add(auditrecord);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
