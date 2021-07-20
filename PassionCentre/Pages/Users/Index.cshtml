@@ -7,8 +7,8 @@
 
 <h1>Manage Users</h1>
 
-<table class="table">
-    <thead>
+<table class="table table-striped">
+    <thead class="thead-dark">
         <tr>
             <th>
                 S/N
@@ -25,6 +25,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.ApplicationUsers[0].DateTimeStamp)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -45,8 +46,8 @@
                 @Html.DisplayFor(modelItem => Model.ApplicationUsers[i].DateTimeStamp)
             </td>
             <td>
-                <a asp-page="./Details" asp-route-id="@Model.ApplicationUsers[i].Id">Details</a>
-                <a asp-page="./Edit" asp-route-id="@Model.ApplicationUsers[i].Id">Edit</a>
+                <a class="btn btn-warning" asp-page="./Details" asp-route-id="@Model.ApplicationUsers[i].Id">Details</a>
+                <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@Model.ApplicationUsers[i].Id">Edit</a>
             </td>
         </tr>
         }

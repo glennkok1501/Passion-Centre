@@ -9,11 +9,12 @@
 @if (User.IsInRole("Admin")) 
 {
     <p>
-        <a asp-page="Create">Create New</a>
+        <a class="btn btn-primary" asp-page="Create">Create New</a>
     </p>
+    <br />
 }
-<table class="table">
-    <thead>
+<table class="table table-striped">
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.AuditRecord[0].AuditActionType)
@@ -48,10 +49,10 @@
             <td>
                 @if (User.IsInRole("Admin"))
                 {
-                    <a asp-page="./Edit" asp-route-id="@item.Audit_ID">Edit</a>
-                    <a asp-page="./Delete" asp-route-id="@item.Audit_ID">Delete</a>
+                    <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.Audit_ID">Edit</a>
+                    <a class="btn btn-warning" asp-page="./Delete" asp-route-id="@item.Audit_ID">Delete</a>
                 }
-                <a asp-page="./Details" asp-route-id="@item.Audit_ID">Details</a>
+                <a class="btn btn-warning" asp-page="./Details" asp-route-id="@item.Audit_ID">Details</a>
             </td>
         </tr>
 }

@@ -10,14 +10,14 @@
     <div class="col-md-4">
         @if (User.IsInRole("Admin"))
         {
-            <a asp-page="Create">[Create New Role]</a>
+            <a class="btn btn-primary" asp-page="Create">Create new Role</a>
         }
-        <a asp-page="Manage">[Manage User Roles]</a>
+        <a class="btn btn-primary" asp-page="Manage">Manage User Roles</a>
     </div>
 </div>
-
-<table class="table">
-    <thead>
+<br />
+<table class="table table-striped">
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.ApplicationRole[0].Name)
@@ -41,11 +41,11 @@
                 <td>
                     @if (User.IsInRole("Admin"))
                     {
-                        <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
-                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                        <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-warning" asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                     }
 
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-warning" asp-page="./Details" asp-route-id="@item.Id">Details</a>
                 </td>
             </tr>
         }
