@@ -14,13 +14,16 @@ namespace PassionCentre.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly PassionCentre.Data.PassionCentreContext _context;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            PassionCentre.Data.PassionCentreContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         public string Username { get; set; }
@@ -86,7 +89,6 @@ namespace PassionCentre.Areas.Identity.Pages.Account.Manage
             user.BirthDate = ApplicationUser.BirthDate;
 
             IdentityResult userResult = await _userManager.UpdateAsync(user);
-            //TODO Audit
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
@@ -98,7 +100,19 @@ namespace PassionCentre.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
-
+            // Create an auditrecord object
+            var auditrecord = new AuditRecord();
+            auditrecord.AuditActionType = "Updated User Record";
+            auditrecord.DateStamp = DateTime.Today.Date;
+            auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+            auditrecord.KeyCourseFieldID = 999999;
+            //dummy record for uppdate user info - 999999
+            // Get current logged-in user
+            var userID = User.Identity.Name.ToString();
+            auditrecord.Username = userID;
+            auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            _context.AuditRecords.Add(auditrecord);
+            await _context.SaveChangesAsync();
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
