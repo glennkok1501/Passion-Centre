@@ -4,11 +4,38 @@
 @{
     ViewData["Title"] = "Details";
 }
+<style type="text/css">
 
-<h1>Details</h1>
+    dl {
+        display: flex;
+        flex-flow: row wrap;
+        border-width: 1px 1px 0 0;
+        box-shadow: 0 0 15px 4px rgba(0,0,0,0.06);
+    }
+
+    dt {
+        flex-basis: 20%;
+        padding: 2px 4px;
+        background: #333;
+        text-align: center;
+        color: #fff;
+        border: 1px solid #fff;
+        margin-bottom: 10px;
+    }
+
+    dd {
+        flex-basis: 70%;
+        flex-grow: 1;
+        margin: 0;
+        padding: 2px 4px;
+        border: 1px solid #333;
+        margin-bottom: 10px;
+    }
+</style>
+
+<h1>Audit Details</h1>
 
 <div>
-    <h4>AuditRecord</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -52,7 +79,7 @@
 <div>
     @if (User.IsInRole("Admin"))
     {
-        <a asp-page="./Edit" asp-route-id="@Model.AuditRecord.Audit_ID">Edit</a>
+        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.AuditRecord.Audit_ID">Edit</a>
     }
-    <a asp-page="./Index">Back to List</a>
+    <a class="btn btn-primary" asp-page="./Index">Back to List</a>
 </div>

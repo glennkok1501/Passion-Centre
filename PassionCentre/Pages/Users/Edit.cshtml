@@ -5,7 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit Application User</h2>
+<h1>Edit Application User</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,7 +24,7 @@
             <input type="hidden" asp-for="ApplicationUser.Id" />
 
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary"  />
             </div>
         </form>
 
@@ -32,7 +32,7 @@
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a class="btn btn-primary" asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
