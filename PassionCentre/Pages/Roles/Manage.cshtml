@@ -8,9 +8,8 @@
     <div class="col-md-4">
         @if (User.IsInRole("Admin"))
         {
-            <a asp-page="Create">[Create New Role]</a>
+            <a class="btn btn-warning" asp-page="Create">Create New Role</a>
         }
-        <a asp-page="Manage">[Manage User Roles]</a>
     </div>
 </div>
 
@@ -73,7 +72,7 @@
                 @Html.Label("Assign Role : ")
                 @Html.DropDownListFor(m => m.selectedrolename, Model.RolesSelectList, "Select Role", new { @class = "form-control" })
                 <br />
-                <input type="submit" value="Assign" />
+                <input class="btn btn-secondary" type="submit" value="Assign" />
             </form>
         </div>
 
@@ -91,7 +90,7 @@
                 @Html.Label("Select Role : ")
                 @Html.DropDownListFor(m => m.delrolename, Model.RolesSelectList, "Select Role", new { @class = "form-control" })
                 <br />
-                <input type="submit" value="Delete this user from Role" asp-page-handler="DeleteUserRole" />
+                <input class="btn btn-secondary" type="submit" value="Delete this user from Role" asp-page-handler="DeleteUserRole" />
             </form>
         </div>
     </div>
@@ -109,7 +108,7 @@
                 @Html.Label("Assign Role : ") <br />
                 @Html.DropDownListFor(m => m.selectedrolename, Model.StaffRolesSelectList, new { @class = "form-control" })
                 <br />
-                <input type="submit" value="Assign" />
+                <input class="btn btn-secondary" type="submit" value="Assign" />
             </form>
         </div>
     </div>

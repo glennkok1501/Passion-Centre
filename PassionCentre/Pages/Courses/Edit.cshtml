@@ -45,7 +45,7 @@
                 <span asp-validation-for="Course.MeetingDetails" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input class="btn btn-warning" type="submit" value="Save"/>
+                <input class="btn btn-success" type="submit" value="Save"/>
             </div>
         </form>
     </div>
@@ -54,7 +54,6 @@
 <div>
     <a class="btn btn-warning" asp-page="./Index">Back to List</a>
 </div>
-<br /><br />
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
