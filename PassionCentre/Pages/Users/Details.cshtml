@@ -106,11 +106,11 @@
     </dl>
 </div>
 <div>
-    <a class="btn btn-primary" asp-page="./EndLockOut" asp-route-id="@Model.ApplicationUser.Id">Unlock</a> |
-    <a class="btn btn-primary" asp-page="./LockOut" asp-route-id="@Model.ApplicationUser.Id">Lock</a> |
+    <a class="btn btn-success" asp-page="./EndLockOut" asp-route-id="@Model.ApplicationUser.Id">Unlock</a> |
+    <a class="btn btn-warning" asp-page="./LockOut" asp-route-id="@Model.ApplicationUser.Id">Lock</a> |
     <a class="btn btn-primary" asp-page="./Index">Back to List</a> |
     @if (User.IsInRole("Admin"))
     {
-        <a class="btn btn-primary" asp-page="./Delete" asp-route-id="@Model.ApplicationUser.Id">Delete</a>
+        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@Model.ApplicationUser.Id">Delete</a>
     }    
 </div>
