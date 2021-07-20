@@ -31,6 +31,9 @@ namespace PassionCentre.Areas.Identity.Pages.Account.Manage
         [BindProperty]
         public InputModel Input { get; set; }
 
+        [BindProperty]
+        public ApplicationUser ApplicationUser { get; set; }
+
         public class InputModel
         {
             [Phone]
@@ -59,6 +62,7 @@ namespace PassionCentre.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            ApplicationUser = await _userManager.GetUserAsync(User);
             await LoadAsync(user);
             return Page();
         }
@@ -66,6 +70,7 @@ namespace PassionCentre.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnPostAsync()
         {
             var user = await _userManager.GetUserAsync(User);
+
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -76,6 +81,12 @@ namespace PassionCentre.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
+
+            user.FullName = ApplicationUser.FullName;
+            user.BirthDate = ApplicationUser.BirthDate;
+
+            IdentityResult userResult = await _userManager.UpdateAsync(user);
+            //TODO Audit
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)

@@ -5,13 +5,17 @@
     ViewData["Title"] = "Our Courses";
 }
 
-<h1>Our Courses</h1>
+<h1 style="text-align: center">Our Courses</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+@if (User.IsInRole("Admin") || User.IsInRole("Staff") || User.IsInRole("Trainer"))
+{
+    <a class="btn btn-primary" asp-page="Create">New Course</a>
+}
+
+<br />
+<br />
+<table class="table table-striped">
+    <thead class="thead-dark">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Course[0].Title)
@@ -22,18 +26,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Course[0].Date)
             </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Course[0].Time)
-                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Course[0].Username)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Course[0].Description)
             </th>
-            @*<th>
-                    @Html.DisplayNameFor(model => model.Course[0].MeetingDetails)
-                </th>*@
             <th></th>
         </tr>
     </thead>
@@ -50,24 +48,17 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.Time)
-                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Username)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
-                @*<td>
-                        @Html.DisplayFor(modelItem => item.MeetingDetails)
-                    </td>*@
-                    
                 <td>
                     @if (User.IsInRole("Admin") || User.IsInRole("Staff") || User.Identity.Name.ToString() == item.Username)
-                    {                    
-                            <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.ID">Edit</a> 
-                            <a class="btn btn-warning" asp-page="./Delete" asp-route-id="@item.ID">Delete</a>                  
+                    {
+                        <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.ID">Edit</a>
+                        <a class="btn btn-warning" asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
                     }
                     <a class="btn btn-warning" asp-page="./Details" asp-route-id="@item.ID">Details</a>
                 </td>
