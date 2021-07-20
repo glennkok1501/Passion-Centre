@@ -16,6 +16,16 @@
                 <input asp-for="Username" class="form-control" disabled />
             </div>
             <div class="form-group">
+                <label asp-for="ApplicationUser.FullName"></label>
+                <input asp-for="ApplicationUser.FullName" class="form-control" />
+                <span asp-validation-for="ApplicationUser.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationUser.BirthDate"></label>
+                <input asp-for="ApplicationUser.BirthDate" class="form-control" />
+                <span asp-validation-for="ApplicationUser.BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Input.PhoneNumber"></label>
                 <input asp-for="Input.PhoneNumber" class="form-control" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
