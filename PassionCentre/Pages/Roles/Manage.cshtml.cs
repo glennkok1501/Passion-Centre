@@ -127,7 +127,7 @@ namespace PassionCentre.Pages.Courses
             if (roleResult.Succeeded)
             {
                 var auditrecord = new AuditRecord();
-                string s = string.Format("User added to {0} Record", AppRole.Name);
+                string s = string.Format("User added to Role");
                 auditrecord.AuditActionType = s;
                 auditrecord.DateStamp = DateTime.Today.Date;
                 auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
@@ -160,7 +160,7 @@ namespace PassionCentre.Pages.Courses
             {
                 await _userManager.RemoveFromRoleAsync(user, delrolename);
                 var auditrecord = new AuditRecord();
-                string s = string.Format("User removed from {0} Record", delrolename);
+                string s = string.Format("User removed from Role");
                 auditrecord.AuditActionType = s;
                 auditrecord.DateStamp = DateTime.Today.Date;
                 auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
