@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{id:int?}"
 @model PassionCentre.Pages.Audit.DeleteModel
 
 @{
@@ -49,7 +49,7 @@
             @Html.DisplayFor(model => model.AuditRecord.IPAddress)
         </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="AuditRecord.Audit_ID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |

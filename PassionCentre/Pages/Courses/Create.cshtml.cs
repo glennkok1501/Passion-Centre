@@ -11,7 +11,7 @@ using PassionCentre.Models;
 
 namespace PassionCentre.Pages.Courses
 {
-    [Authorize(Roles = "Admin, Trainer")]
+    [Authorize(Roles = "Admin, Trainer, Staff")]
     public class CreateModel : PageModel
     {
         private readonly PassionCentre.Data.PassionCentreContext _context;

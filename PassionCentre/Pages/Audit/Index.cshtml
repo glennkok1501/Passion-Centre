@@ -6,7 +6,7 @@
 }
 
 <h1>Audit</h1>
-@if (User.IsInRole("Admin")) 
+@if (User.IsInRole("Admin"))
 {
     <p>
         <a class="btn btn-primary" asp-page="Create">Create New</a>
@@ -32,29 +32,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.AuditRecord) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AuditActionType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Username)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateStamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KeyCourseFieldID)
-            </td>
-            <td>
-                @if (User.IsInRole("Admin"))
-                {
-                    <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.Audit_ID">Edit</a>
-                    <a class="btn btn-warning" asp-page="./Delete" asp-route-id="@item.Audit_ID">Delete</a>
-                }
-                <a class="btn btn-warning" asp-page="./Details" asp-route-id="@item.Audit_ID">Details</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.AuditRecord)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuditActionType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateStamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KeyCourseFieldID)
+                </td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.Audit_ID">Edit</a>
+                        <a class="btn btn-warning" asp-page="./Delete" asp-route-id="@item.Audit_ID">Delete</a>
+                    }
+                    <a class="btn btn-warning" asp-page="./Details" asp-route-id="@item.Audit_ID">Details</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
