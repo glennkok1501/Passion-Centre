@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PassionCentre.Pages.Users
 {
+    [Authorize(Roles = "Admin, Staff")]
     public class EditModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -59,24 +60,19 @@ namespace PassionCentre.Pages.Users
 
             IdentityResult userResult = await _userManager.UpdateAsync(appUser);
 
-            //TODO Auditing
-            //if (roleRuslt.Succeeded)
-            //{
-            //    var auditrecord = new AuditRecord();
-            //    auditrecord.AuditActionType = "Edit ApplicationRole Record";
-            //    auditrecord.DateStamp = DateTime.Today.Date;
-            //    auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
-            //    auditrecord.KeyCourseFieldID = 9999;
-            //    // 9999 – roles record 
-            //    // Get current logged-in user
-            //    var userID = User.Identity.Name.ToString();
-            //    auditrecord.Username = userID;
-            //    auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-            //    _context.AuditRecords.Add(auditrecord);
-            //    await _context.SaveChangesAsync();
-            //    return RedirectToPage("./Index");
+            var auditrecord = new AuditRecord();
+            auditrecord.AuditActionType = "Update User Record";
+            auditrecord.DateStamp = DateTime.Today.Date;
+            auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+            auditrecord.KeyCourseFieldID = 9999;
+            // 9999 – roles record 
+            // Get current logged-in user
+            var userID = User.Identity.Name.ToString();
+            auditrecord.Username = userID;
+            auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            _context.AuditRecords.Add(auditrecord);
+            await _context.SaveChangesAsync();
 
-            //}
             return RedirectToPage("./Index");
         }
 
