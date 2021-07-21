@@ -43,7 +43,7 @@ namespace PassionCentre.Pages.Users
                 auditrecord.DateStamp = DateTime.Today.Date;
                 auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
                 auditrecord.KeyCourseFieldID = 99999;
-                //99999 -User record
+                //99999 -dummy record
                 // Get current logged-in user
                 var userID = User.Identity.Name.ToString();
                 auditrecord.Username = userID;

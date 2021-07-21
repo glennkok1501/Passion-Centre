@@ -92,8 +92,8 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                 auditrecord.AuditActionType = "Locked Out Account";
                 auditrecord.DateStamp = DateTime.Today.Date;
                 auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
-                auditrecord.KeyCourseFieldID = 999;
-                // 999 – dummy record 
+                auditrecord.KeyCourseFieldID = 99999;
+                // 99999 – dummy record 
 
                 auditrecord.Username = user.UserName;
                 auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -110,8 +110,8 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                 auditrecord.AuditActionType = "Failed Login";
                 auditrecord.DateStamp = DateTime.Today.Date;
                 auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
-                auditrecord.KeyCourseFieldID = 999;
-                // 999 – dummy record 
+                auditrecord.KeyCourseFieldID = 99999;
+                // 99999 – dummy record 
 
                 auditrecord.Username = user.UserName;
                 auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();

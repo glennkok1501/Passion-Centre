@@ -65,8 +65,8 @@ namespace PassionCentre.Pages.Roles
                 auditrecord.AuditActionType = "Edit ApplicationRole Record";
                 auditrecord.DateStamp = DateTime.Today.Date;
                 auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
-                auditrecord.KeyCourseFieldID = 9999;
-                // 9999 – roles record 
+                auditrecord.KeyCourseFieldID = 99999;
+                // 99999 – dummy record 
                 // Get current logged-in user
                 var userID = User.Identity.Name.ToString();
                 auditrecord.Username = userID;
