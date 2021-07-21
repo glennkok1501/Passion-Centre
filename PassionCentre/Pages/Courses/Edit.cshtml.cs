@@ -60,7 +60,6 @@ namespace PassionCentre.Pages.Courses
             {
                 return Page();
             }
-
             _context.Attach(Course).State = EntityState.Modified;
 
             try

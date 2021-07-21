@@ -59,6 +59,7 @@ namespace PassionCentre.Pages.Users
 
             IdentityResult userResult = await _userManager.UpdateAsync(appUser);
 
+            //TODO Auditing
             //if (roleRuslt.Succeeded)
             //{
             //    var auditrecord = new AuditRecord();

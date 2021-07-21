@@ -43,6 +43,7 @@
                 <input asp-for="Course.MeetingDetails" class="form-control" />
                 <span asp-validation-for="Course.MeetingDetails" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="Course.Username" />
             <div class="form-group">
                 <input class="btn btn-primary" type="submit" value="Save"/>
             </div>
