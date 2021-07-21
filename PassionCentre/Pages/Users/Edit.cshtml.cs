@@ -26,6 +26,9 @@ namespace PassionCentre.Pages.Users
             _context = context;
         }
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
         [BindProperty]
         public ApplicationUser ApplicationUser { get; set; }
 
@@ -57,6 +60,14 @@ namespace PassionCentre.Pages.Users
             appUser.Id = ApplicationUser.Id;
             appUser.FullName = ApplicationUser.FullName;
             appUser.BirthDate = ApplicationUser.BirthDate;
+
+            //change username
+            var setUserNameResult = await _userManager.SetUserNameAsync(appUser, ApplicationUser.UserName);
+            if (!setUserNameResult.Succeeded)
+            {
+                StatusMessage = "Error changing user name.";
+                return Page();
+            }
 
             IdentityResult userResult = await _userManager.UpdateAsync(appUser);
 
