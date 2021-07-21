@@ -30,6 +30,7 @@ namespace PassionCentre.Pages.Courses
         public SelectList StaffRolesSelectList;
         public SelectList UsersSelectList;
         public SelectList StaffUsersSelectList;
+        public SelectList StaffTrainerSelectList;
 
         public List<string> staffrolePermit = new List<string>()
             {
@@ -39,6 +40,11 @@ namespace PassionCentre.Pages.Courses
         public List<string> staffuserPermit = new List<string>()
             {
                 
+            };
+
+        public List<string> stafftrainerPermit = new List<string>()
+            {
+
             };
 
         public string selectedrolename { set; get; }
@@ -78,17 +84,25 @@ namespace PassionCentre.Pages.Courses
                 {
                     staffuserPermit.Add(a.UserName);
                 }
+                else if (await _userManager.IsInRoleAsync(a, "Trainer"))
+                {
+                    stafftrainerPermit.Add(a.UserName);
+                }
             }
 
             IQueryable<string> RoleQuery = from m in _roleManager.Roles orderby m.Name select m.Name;
             IQueryable<string> StaffRoleQuery = from n in _roleManager.Roles where staffrolePermit.Contains(n.Name) orderby n.Name select n.Name;
             IQueryable<string> UsersQuery = from u in _context.Users orderby u.UserName select u.UserName;
             IQueryable<string> StaffUsersQuery = from v in _context.Users where staffuserPermit.Contains(v.UserName) orderby v.UserName select v.UserName;
+            IQueryable<string> StaffTrainerQuery = from v in _context.Users where stafftrainerPermit.Contains(v.UserName) orderby v.UserName select v.UserName;
 
             RolesSelectList = new SelectList(await RoleQuery.Distinct().ToListAsync());
             StaffRolesSelectList = new SelectList(await StaffRoleQuery.Distinct().ToListAsync());
+            
             UsersSelectList = new SelectList(await UsersQuery.Distinct().ToListAsync());
             StaffUsersSelectList = new SelectList(await StaffUsersQuery.Distinct().ToListAsync());
+            
+            StaffTrainerSelectList = new SelectList(await StaffTrainerQuery.Distinct().ToListAsync());
 
 
             // Get all the roles 
