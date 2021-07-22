@@ -53,8 +53,8 @@ namespace PassionCentre.Pages.Roles
             auditrecord.AuditActionType = "Delete ApplicationRole Record";
             auditrecord.DateStamp = DateTime.Today.Date;
             auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
-            auditrecord.KeyCourseFieldID = 9999;
-            // 9999 – roles record 
+            auditrecord.KeyCourseFieldID = 99999;
+            // 99999 – dummy record 
             var userID = User.Identity.Name.ToString();
             auditrecord.Username = userID;
             auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();

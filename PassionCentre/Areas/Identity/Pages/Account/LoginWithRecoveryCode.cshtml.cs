@@ -76,31 +76,15 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                 _logger.LogInformation("User with ID '{UserId}' logged in with a recovery code.", user.Id);
                 return LocalRedirect(returnUrl ?? Url.Content("~/"));
             }
-            else
-            {
-                // Login failed attempt - create an audit record
-                var auditrecord = new AuditRecord();
-                auditrecord.AuditActionType = "Failed Login";
-                auditrecord.DateStamp = DateTime.Today.Date;
-                auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
-                auditrecord.KeyCourseFieldID = 999;
-                // 999 – dummy record 
-
-                auditrecord.Username = user.UserName;
-                auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-                // save the username used for the failed login
-                _context.AuditRecords.Add(auditrecord);
-                await _context.SaveChangesAsync();
-            }
-            if (result.IsLockedOut)
+            else if (result.IsLockedOut)
             {
                 // Login failed attempt - create an audit record
                 var auditrecord = new AuditRecord();
                 auditrecord.AuditActionType = "Locked Out Account";
                 auditrecord.DateStamp = DateTime.Today.Date;
                 auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
-                auditrecord.KeyCourseFieldID = 999;
-                // 999 – dummy record 
+                auditrecord.KeyCourseFieldID = 99999;
+                // 99999 – dummy record 
 
                 auditrecord.Username = user.UserName;
                 auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -112,6 +96,20 @@ namespace PassionCentre.Areas.Identity.Pages.Account
             }
             else
             {
+                // Login failed attempt - create an audit record
+                var auditrecord = new AuditRecord();
+                auditrecord.AuditActionType = "Failed Login";
+                auditrecord.DateStamp = DateTime.Today.Date;
+                auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+                auditrecord.KeyCourseFieldID = 99999;
+                // 99999 – dummy record 
+
+                auditrecord.Username = user.UserName;
+                auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                // save the username used for the failed login
+                _context.AuditRecords.Add(auditrecord);
+                await _context.SaveChangesAsync();
+
                 _logger.LogWarning("Invalid recovery code entered for user with ID '{UserId}' ", user.Id);
                 ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
                 return Page();

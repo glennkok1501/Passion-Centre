@@ -126,6 +126,19 @@ namespace PassionCentre.Pages.Courses
 
             if (roleResult.Succeeded)
             {
+                var auditrecord = new AuditRecord();
+                string s = string.Format("User added to Role");
+                auditrecord.AuditActionType = s;
+                auditrecord.DateStamp = DateTime.Today.Date;
+                auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+                auditrecord.KeyCourseFieldID = 99999;
+                // 99999 – dummy record 
+                // Get current logged-in user
+                var userID = User.Identity.Name.ToString();
+                auditrecord.Username = userID;
+                auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                _context.AuditRecords.Add(auditrecord);
+                await _context.SaveChangesAsync();
                 TempData["message"] = "Role added to this user successfully";
                 return RedirectToPage("Manage");
             }
@@ -146,7 +159,19 @@ namespace PassionCentre.Pages.Courses
             if (await _userManager.IsInRoleAsync(user, delrolename))
             {
                 await _userManager.RemoveFromRoleAsync(user, delrolename);
-
+                var auditrecord = new AuditRecord();
+                string s = string.Format("User removed from Role");
+                auditrecord.AuditActionType = s;
+                auditrecord.DateStamp = DateTime.Today.Date;
+                auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+                auditrecord.KeyCourseFieldID = 99999;
+                // 99999 – dummy record 
+                // Get current logged-in user
+                var userID = User.Identity.Name.ToString();
+                auditrecord.Username = userID;
+                auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                _context.AuditRecords.Add(auditrecord);
+                await _context.SaveChangesAsync();
                 TempData["message"] = "Role removed from this user successfully";
             }
 

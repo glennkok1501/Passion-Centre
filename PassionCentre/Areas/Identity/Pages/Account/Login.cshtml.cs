@@ -106,37 +106,19 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
-                else
-                {
-                    // Login failed attempt - create an audit record
-                    var auditrecord = new AuditRecord();
-                    auditrecord.AuditActionType = "Failed Login";
-                    auditrecord.DateStamp = DateTime.Today.Date;
-                    auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
-                    auditrecord.KeyCourseFieldID = 999;
-                    // 999 – dummy record 
-
-                    auditrecord.Username = Input.UserName;
-                    auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
-                    // save the username used for the failed login
-                    _context.AuditRecords.Add(auditrecord);
-                    await _context.SaveChangesAsync();
-                }
-
-
-                if (result.RequiresTwoFactor)
+                else if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
-                if (result.IsLockedOut)
+                else if (result.IsLockedOut)
                 {
                     // Login failed attempt - create an audit record
                     var auditrecord = new AuditRecord();
                     auditrecord.AuditActionType = "Locked Out Account";
                     auditrecord.DateStamp = DateTime.Today.Date;
                     auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
-                    auditrecord.KeyCourseFieldID = 999;
-                    // 999 – dummy record 
+                    auditrecord.KeyCourseFieldID = 99999;
+                    // 99999 – dummy record 
 
                     auditrecord.Username = Input.UserName;
                     auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
@@ -148,6 +130,20 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                 }
                 else
                 {
+                    // Login failed attempt - create an audit record
+                    var auditrecord = new AuditRecord();
+                    auditrecord.AuditActionType = "Failed Login";
+                    auditrecord.DateStamp = DateTime.Today.Date;
+                    auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+                    auditrecord.KeyCourseFieldID = 99999;
+                    // 99999 – dummy record 
+
+                    auditrecord.Username = Input.UserName;
+                    auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                    // save the username used for the failed login
+                    _context.AuditRecords.Add(auditrecord);
+                    await _context.SaveChangesAsync();
+
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }

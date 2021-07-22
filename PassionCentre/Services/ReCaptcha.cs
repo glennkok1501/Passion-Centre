@@ -32,8 +32,6 @@ namespace PassionCentre.Services
             }
             catch (Exception)
             {
-
-                // TODO Auditing
                 return false;
             }
         }
