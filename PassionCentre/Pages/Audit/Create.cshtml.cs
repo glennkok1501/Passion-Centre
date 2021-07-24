@@ -38,6 +38,19 @@ namespace PassionCentre.Pages.Audit
                 return Page();
             }
 
+            //Create audit record for creating audit
+            var auditrecord = new AuditRecord();
+            auditrecord.AuditActionType = "Add Audit Record";
+            auditrecord.DateStamp = DateTime.Today.Date;
+            auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+            auditrecord.KeyCourseFieldID = 99999;
+            //dummy record - 99999
+            var userID = User.Identity.Name.ToString();
+            auditrecord.Username = userID;
+            auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+            _context.AuditRecords.Add(auditrecord);
+
+            ///Create audit record
             _context.AuditRecords.Add(AuditRecord);
             await _context.SaveChangesAsync();
 
