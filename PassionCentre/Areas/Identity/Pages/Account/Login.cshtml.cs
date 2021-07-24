@@ -106,15 +106,17 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }
-                else if (result.RequiresTwoFactor)
+
+                if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
                 }
-                else if (result.IsLockedOut)
+
+                if (result.IsLockedOut)
                 {
                     // Login failed attempt - create an audit record
                     var auditrecord = new AuditRecord();
-                    auditrecord.AuditActionType = "Locked Out Account";
+                    auditrecord.AuditActionType = "Logging in using locked out account";
                     auditrecord.DateStamp = DateTime.Today.Date;
                     auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
                     auditrecord.KeyCourseFieldID = 99999;
@@ -125,6 +127,8 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                     // save the username used for the failed login
                     _context.AuditRecords.Add(auditrecord);
                     await _context.SaveChangesAsync();
+
+
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }
@@ -143,6 +147,7 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                     // save the username used for the failed login
                     _context.AuditRecords.Add(auditrecord);
                     await _context.SaveChangesAsync();
+
 
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();

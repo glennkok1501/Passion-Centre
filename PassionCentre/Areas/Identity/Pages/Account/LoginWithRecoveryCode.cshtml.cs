@@ -76,11 +76,12 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                 _logger.LogInformation("User with ID '{UserId}' logged in with a recovery code.", user.Id);
                 return LocalRedirect(returnUrl ?? Url.Content("~/"));
             }
-            else if (result.IsLockedOut)
+            
+            if (result.IsLockedOut)
             {
                 // Login failed attempt - create an audit record
                 var auditrecord = new AuditRecord();
-                auditrecord.AuditActionType = "Locked Out Account";
+                auditrecord.AuditActionType = "Logging in using locked out account with recovery code";
                 auditrecord.DateStamp = DateTime.Today.Date;
                 auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
                 auditrecord.KeyCourseFieldID = 99999;
@@ -91,6 +92,8 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                 // save the username used for the failed login
                 _context.AuditRecords.Add(auditrecord);
                 await _context.SaveChangesAsync();
+
+
                 _logger.LogWarning("User with ID '{UserId}' account locked out.", user.Id);
                 return RedirectToPage("./Lockout");
             }
@@ -109,6 +112,7 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                 // save the username used for the failed login
                 _context.AuditRecords.Add(auditrecord);
                 await _context.SaveChangesAsync();
+
 
                 _logger.LogWarning("Invalid recovery code entered for user with ID '{UserId}' ", user.Id);
                 ModelState.AddModelError(string.Empty, "Invalid recovery code entered.");
