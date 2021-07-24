@@ -9,6 +9,7 @@ namespace PassionCentre.Models
 {
     public class ApplicationRole : IdentityRole
     {
+        [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Please enter a valid description.")]
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public string IPAddress { get; set; }

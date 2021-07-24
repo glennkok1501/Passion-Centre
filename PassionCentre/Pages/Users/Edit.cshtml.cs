@@ -61,14 +61,6 @@ namespace PassionCentre.Pages.Users
             appUser.FullName = ApplicationUser.FullName;
             appUser.BirthDate = ApplicationUser.BirthDate;
 
-            //change username
-            var setUserNameResult = await _userManager.SetUserNameAsync(appUser, ApplicationUser.UserName);
-            if (!setUserNameResult.Succeeded)
-            {
-                StatusMessage = "Error changing user name.";
-                return Page();
-            }
-
             IdentityResult userResult = await _userManager.UpdateAsync(appUser);
             if (userResult.Succeeded)
             {

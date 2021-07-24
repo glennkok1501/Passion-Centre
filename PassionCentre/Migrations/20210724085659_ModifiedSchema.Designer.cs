@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PassionCentre.Data;
 
 namespace PassionCentre.Migrations
 {
     [DbContext(typeof(PassionCentreContext))]
-    partial class PassionCentreContextModelSnapshot : ModelSnapshot
+    [Migration("20210724085659_ModifiedSchema")]
+    partial class ModifiedSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
