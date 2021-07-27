@@ -104,6 +104,19 @@ namespace PassionCentre.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    // Login failed attempt - create an audit record
+                    var auditrecord = new AuditRecord();
+                    auditrecord.AuditActionType = "Log in successful";
+                    auditrecord.DateStamp = DateTime.Today.Date;
+                    auditrecord.TimeStamp = DateTime.Now.ToString("h:mm:ss tt");
+                    auditrecord.KeyCourseFieldID = 99999;
+                    // 99999 – dummy record 
+
+                    auditrecord.Username = Input.UserName;
+                    auditrecord.IPAddress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                    // save the username used for the failed login
+                    _context.AuditRecords.Add(auditrecord);
+                    await _context.SaveChangesAsync();
                     return LocalRedirect(returnUrl);
                 }
 
