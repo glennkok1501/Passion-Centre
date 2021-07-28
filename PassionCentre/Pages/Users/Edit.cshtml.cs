@@ -45,6 +45,11 @@ namespace PassionCentre.Pages.Users
             {
                 return NotFound();
             }
+
+            if (_userManager.IsInRoleAsync(ApplicationUser, "Admin").Result && !User.IsInRole("Admin"))
+            {
+                return NotFound();
+            }
             return Page();
         }
 
