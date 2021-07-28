@@ -34,6 +34,12 @@ namespace PassionCentre.Pages.Users
             {
                 return NotFound();
             }
+
+            if (_userManager.IsInRoleAsync(ApplicationUser, "Admin").Result && !User.IsInRole("Admin"))
+            {
+                return NotFound();
+            }
+
             var result = await _userManager.SetLockoutEndDateAsync(ApplicationUser, null);
             if (result.Succeeded)
             {

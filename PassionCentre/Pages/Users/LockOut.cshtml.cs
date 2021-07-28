@@ -34,6 +34,12 @@ namespace PassionCentre.Pages.Users
             {
                 return NotFound();
             }
+
+            if (_userManager.IsInRoleAsync(ApplicationUser, "Admin").Result && !User.IsInRole("Admin"))
+            {
+                return NotFound();
+            }
+
             // Create an auditrecord object
             var auditrecord = new AuditRecord();
             auditrecord.AuditActionType = "Lock User Record";
