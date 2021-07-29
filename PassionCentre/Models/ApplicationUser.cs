@@ -11,6 +11,7 @@ namespace PassionCentre.Models
     {
         [Display(Name = "Full Name")]
         [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Please enter a valid name.")]
+        [StringLength(60, ErrorMessage = "Full Name length can't be more than 60.")]
         public string FullName { get; set; }
 
         [Display(Name ="Date of Birth")]

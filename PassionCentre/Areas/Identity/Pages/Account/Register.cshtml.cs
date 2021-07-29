@@ -55,6 +55,8 @@ namespace PassionCentre.Areas.Identity.Pages.Account
         {
 
             [Required]
+            [StringLength(32, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [RegularExpression("^[a-zA-Z._@+-]*$", ErrorMessage = "Please enter a valid Username.")]
             [Display(Name = "Username")]
             public string UserName { get; set; }
 
@@ -70,12 +72,14 @@ namespace PassionCentre.Areas.Identity.Pages.Account
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
+            [StringLength(64)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
             [Required]
             [Display(Name ="Full Name")]
+            [StringLength(60, ErrorMessage = "Full Name length can't be more than 60.")]
             [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Please enter a valid name.")]
             public string FullName { get; set; }
 

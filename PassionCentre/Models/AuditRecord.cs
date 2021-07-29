@@ -14,11 +14,13 @@ namespace PassionCentre.Models
         [Required]
         [Display(Name = "Audit Action")]
         [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Please enter a valid action.")]
+        [StringLength(60)]
         public string AuditActionType { get; set; }
         // Could be  Login Success /Failure/ Logout, Create, Delete, View, Update
 
         [Required]
         [Display(Name = "Performed By")]
+        [StringLength(32)]
         [RegularExpression("^[a-zA-Z._@+-]*$", ErrorMessage = "Please enter a valid Username.")]
         public string Username { get; set; }
         //Logged in user performing the action

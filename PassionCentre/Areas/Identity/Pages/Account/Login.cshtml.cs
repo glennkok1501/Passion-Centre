@@ -50,11 +50,14 @@ namespace PassionCentre.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [StringLength(32)]
+            [RegularExpression("^[a-zA-Z._@+-]*$", ErrorMessage = "Please enter a valid Username.")]
             [Display(Name ="Username")]
             public string UserName { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
+            [StringLength(64)]
             public string Password { get; set; }
 
             [Display(Name = "Remember me?")]
