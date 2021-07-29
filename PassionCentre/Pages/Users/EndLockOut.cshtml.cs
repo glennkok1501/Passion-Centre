@@ -37,7 +37,7 @@ namespace PassionCentre.Pages.Users
 
             if (_userManager.IsInRoleAsync(ApplicationUser, "Admin").Result && !User.IsInRole("Admin"))
             {
-                return NotFound();
+                return LocalRedirect("/Identity/Account/AccessDenied");
             }
 
             var result = await _userManager.SetLockoutEndDateAsync(ApplicationUser, null);
