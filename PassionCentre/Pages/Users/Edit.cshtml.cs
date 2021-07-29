@@ -46,7 +46,7 @@ namespace PassionCentre.Pages.Users
                 return NotFound();
             }
 
-            if (_userManager.IsInRoleAsync(ApplicationUser, "Admin").Result && !User.IsInRole("Admin"))
+            if ((_userManager.IsInRoleAsync(ApplicationUser, "Admin").Result || _userManager.IsInRoleAsync(ApplicationUser, "Staff").Result) && !User.IsInRole("Admin"))
             {
                 return LocalRedirect("/Identity/Account/AccessDenied");
             }
