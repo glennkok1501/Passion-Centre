@@ -30,23 +30,26 @@ namespace PassionCentre.Models
                         Subject = "Networking",
                         Date = DateTime.Parse("2021-07-12"),
                         Username = "ArthurTan",
-                        Description = "Networking beginner's guide"
+                        Description = "Networking beginner's guide",
+                        MeetingDetails = "Google Meets Meeting ID: 123123"
                     },
                     new Course
                     {
                         Title = "Mobile App Development",
                         Subject = "Android",
                         Date = DateTime.Parse("2021-07-14"),
-                        Username = "BobbyLim",
-                        Description = "Introduction to Android Application Development"
+                        Username = "WesleyTeo",
+                        Description = "Introduction to Android Application Development",
+                        MeetingDetails = "Skype Meeting ID: 123123"
                     },
                     new Course
                     {
-                        Title = "How to Not Be a Graphic Designer",
+                        Title = "How to Be a Graphics Designer",
                         Subject = "Adobe",
                         Date = DateTime.Parse("2021-07-14"),
                         Username = "JaymenNg",
-                        Description = "Introduction to Adobe Photoshop"
+                        Description = "Introduction to Adobe Photoshop",
+                        MeetingDetails = "Zoom Meeting ID: 123123"
                     }
                 );
 
@@ -110,12 +113,12 @@ namespace PassionCentre.Models
 
             //To remove before deployment. Used for testing purposes
             // Seeding Users
-            if (userManager.FindByNameAsync("admin1").Result == null)
+            if (userManager.FindByNameAsync("admin").Result == null)
             {
                 var user = new ApplicationUser();
-                user.UserName = "admin1";
-                user.FullName = "admin1";
-                user.Email = "admin1@gmail.com";
+                user.UserName = "admin";
+                user.FullName = "admin";
+                user.Email = "admin@gmail.com";
                 user.BirthDate = DateTime.Now;
                 user.EmailConfirmed = true;
                 IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
@@ -125,42 +128,12 @@ namespace PassionCentre.Models
                 }
             }
 
-            if (userManager.FindByNameAsync("admin2").Result == null)
+            if (userManager.FindByNameAsync("staff").Result == null)
             {
                 var user = new ApplicationUser();
-                user.UserName = "admin2";
-                user.FullName = "admin2";
-                user.Email = "admin2@gmail.com";
-                user.BirthDate = DateTime.Now;
-                user.EmailConfirmed = true;
-                IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
-                if (result.Succeeded)
-                {
-                    userManager.AddToRoleAsync(user, "Admin").Wait();
-                }
-            }
-
-            if (userManager.FindByNameAsync("staff1").Result == null)
-            {
-                var user = new ApplicationUser();
-                user.UserName = "staff1";
+                user.UserName = "staff";
                 user.FullName = "staff";
-                user.Email = "staff1@gmail.com";
-                user.BirthDate = DateTime.Now;
-                user.EmailConfirmed = true;
-                IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
-                if (result.Succeeded)
-                {
-                    userManager.AddToRoleAsync(user, "Staff").Wait();
-                }
-            }
-
-            if (userManager.FindByNameAsync("staff2").Result == null)
-            {
-                var user = new ApplicationUser();
-                user.UserName = "staff2";
-                user.FullName = "staff";
-                user.Email = "staff2@gmail.com";
+                user.Email = "staff@gmail.com";
                 user.BirthDate = DateTime.Now;
                 user.EmailConfirmed = true;
                 IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
@@ -175,7 +148,7 @@ namespace PassionCentre.Models
                 var user = new ApplicationUser();
                 user.UserName = "ArthurTan";
                 user.FullName = "Arthur Tan";
-                user.Email = "trainer1@gmail.com";
+                user.Email = "arthurtan@gmail.com";
                 user.BirthDate = DateTime.Now;
                 user.EmailConfirmed = true;
                 IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
@@ -185,12 +158,12 @@ namespace PassionCentre.Models
                 }
             }
 
-            if (userManager.FindByNameAsync("BobbyLim").Result == null)
+            if (userManager.FindByNameAsync("WesleyTeo").Result == null)
             {
                 var user = new ApplicationUser();
-                user.UserName = "BobbyLim";
-                user.FullName = "Bobby Lim";
-                user.Email = "trainer2@gmail.com";
+                user.UserName = "WesleyTeo";
+                user.FullName = "Wesley Teo";
+                user.Email = "wesleyteo@gmail.com";
                 user.BirthDate = DateTime.Now;
                 user.EmailConfirmed = true;
                 IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
@@ -205,7 +178,7 @@ namespace PassionCentre.Models
                 var user = new ApplicationUser();
                 user.UserName = "JaymenNg";
                 user.FullName = "Jaymen Ng";
-                user.Email = "trainer3@gmail.com";
+                user.Email = "jaymenng@gmail.com";
                 user.BirthDate = DateTime.Now;
                 user.EmailConfirmed = true;
                 IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
@@ -215,27 +188,12 @@ namespace PassionCentre.Models
                 }
             }
 
-            if (userManager.FindByNameAsync("user1").Result == null)
+            if (userManager.FindByNameAsync("user").Result == null)
             {
                 var user = new ApplicationUser();
-                user.UserName = "user1";
+                user.UserName = "user";
                 user.FullName = "user";
-                user.Email = "user1@gmail.com";
-                user.BirthDate = DateTime.Now;
-                user.EmailConfirmed = true;
-                IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
-                if (result.Succeeded)
-                {
-                    userManager.AddToRoleAsync(user, "User").Wait();
-                }
-            }
-
-            if (userManager.FindByNameAsync("user2").Result == null)
-            {
-                var user = new ApplicationUser();
-                user.UserName = "user2";
-                user.FullName = "user";
-                user.Email = "user2@gmail.com";
+                user.Email = "user@gmail.com";
                 user.BirthDate = DateTime.Now;
                 user.EmailConfirmed = true;
                 IdentityResult result = userManager.CreateAsync(user, "Password@123").Result;
