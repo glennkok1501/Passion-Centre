@@ -30,7 +30,7 @@ namespace PassionCentre.Models
                         Subject = "Networking",
                         Date = DateTime.Parse("2021-07-12"),
                         Username = "ArthurTan",
-                        Description = "Networking beginner's guide",
+                        Description = "Networking beginners guide",
                         MeetingDetails = "Google Meets Meeting ID: 123123"
                     },
                     new Course
